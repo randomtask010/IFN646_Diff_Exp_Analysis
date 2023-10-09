@@ -86,7 +86,7 @@
     ),
     category.names = c("deseq2", "edger", "noiseq"),
     output = TRUE,
-    filename = "Working Directory/Output/venn_3_500_500_downregulated.png",
+    filename = "Working Directory/Output/Images/venn_3_500_500_downregulated.png",
     output.type = "png",
     imagetype = "png",
     resolution = 300,
