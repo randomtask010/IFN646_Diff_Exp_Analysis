@@ -2,8 +2,8 @@
 library(edgeR)
 
 # Step 2: Load Dataset
-count_data <- read.table("6_750_250.tsv", header=TRUE, row.names=1)
-groups <- factor(rep(1:2, each=6))
+count_data <- read.table("RAW data/3_500_500.tsv", header=TRUE, row.names=1)
+groups <- factor(rep(1:2, each=3))
 
 # Step 3: Create DGEList Object
 y <- DGEList(counts=count_data, group=groups)
@@ -32,7 +32,7 @@ summary(decided)
 topTags(et)
 
 # Step 11: Load Metadata
-meta_data <- read.table("6_750_250_meta.tsv", header=TRUE, row.names=1)
+meta_data <- read.table("RAW data/3_500_500_meta.tsv", header=TRUE, row.names=1)
 edgeR_results <- topTags(et, n=Inf)
 annotated_results <- merge(edgeR_results, meta_data, by="row.names", all.x=TRUE)
 rownames(annotated_results) <- annotated_results$Row.names
@@ -50,9 +50,9 @@ common_down <- intersect(detected_down_edgeR, meta_down)
 
 # Step 13: Summarize outliers
 outliers_up <- setdiff(detected_up_edgeR, meta_up)
-write.csv(outliers_up, "6_750_250_outliers_upregulated.csv", row.names = FALSE)
+write.csv(outliers_up, "Working Directory/Output/edgeR_3_500_500_outliers_upregulated.csv", row.names = FALSE)
 outliers_down <- setdiff(detected_down_edgeR, meta_down)
-write.csv(outliers_down, "6_750_250_outliers_downregulated.csv", row.names = FALSE)
+write.csv(outliers_down, "Working Directory/Output/edgeR_3_500_500_outliers_downregulated.csv", row.names = FALSE)
 
 # Step 14: Accuracy and Precision Matrix
 true_positives <- length(common_up) + length(common_down)
@@ -63,28 +63,3 @@ accuracy <- (true_positives + true_negatives) / nrow(meta_data)
 precision <- true_positives / (true_positives + false_positives)
 recall <- true_positives / (true_positives + false_negatives)
 f1_score <- 2 * ((precision * recall) / (precision + recall))
-
-# Step 15: Venn Diagram Creation
-library(VennDiagram)
-
-# Venn diagram for upregulated genes
-venn.diagram(
-  x = list(edgeR = detected_up_edgeR, meta = meta_up),
-  category.names = c("edgeR detected up", "Metadata up"),
-  output = TRUE,
-  filename = "6_750_250_venn_upregulated.png",
-  output.type = "png",
-  imagetype = "png",
-  resolution = 300
-)
-
-# Venn diagram for downregulated genes
-venn.diagram(
-  x = list(edgeR = detected_down_edgeR, meta = meta_down),
-  category.names = c("edgeR detected down", "Metadata down"),
-  output = TRUE,
-  filename = "6_750_250_venn_downregulated.png",
-  output.type = "png",
-  imagetype = "png",
-  resolution = 300
-)
