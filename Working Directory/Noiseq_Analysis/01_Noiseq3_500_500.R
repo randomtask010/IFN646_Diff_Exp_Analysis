@@ -68,6 +68,7 @@ length(common_down)
 #it is the same thing as saying it is upregulated in condition 2 compared to condition 1.
 
 # upregulated in condition 2 compared to condition 1
+#detected_up represent the up regulated genes in condition 2 compared to condition 1.
 detected_up = degenes(results, q = 0.8, M = "down")
 detected_up
 

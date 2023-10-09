@@ -45,7 +45,7 @@ annotated_results$Row.names <- NULL
 # Step 9: Comparison
 #A gene is upregulated in condition 1 compared to condition 2 (equals when M = "up"), 
 #it is the same thing as saying it is downregulated in condition 2 compared to condition 1.
-
+#detected_down represent the down regulated genes in condition 2 compared to condition 1.
 # Downregulated in condition 2 compared to condition 1
 detected_down = degenes(results, q = 0.8, M = "up")
 detected_down
@@ -67,7 +67,7 @@ length(common_down)
 #Upregulated
 #A gene is downregulated in condition 1 compared to condition 2 (equals when M = "down"), 
 #it is the same thing as saying it is upregulated in condition 2 compared to condition 1.
-
+#detected_up represent the up regulated genes in condition 2 compared to condition 1.
 # upregulated in condition 2 compared to condition 1
 detected_up = degenes(results, q = 0.8, M = "down")
 detected_up
