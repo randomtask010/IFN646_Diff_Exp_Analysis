@@ -2,7 +2,7 @@
 library(DESeq2)
 
 # Step 2: Load Dataset
-count_data <- read.table("9_750_250.tsv", header=TRUE, row.names=1)
+count_data <- read.table("RAW data/9_750_250.tsv", header=TRUE, row.names=1)
 sample_info <- data.frame(groups = factor(rep(1:2, each=9))) # Create a sample information data frame
 
 # Step 3: Create DESeqDataSet object
@@ -28,7 +28,7 @@ res <- res[!is.na(res$padj < 0.05), ]
 head(res)
 
 # Step 11: Load Metadata
-meta_data <- read.table("9_750_250_meta.tsv", header=TRUE, row.names=1)
+meta_data <- read.table("RAW data/9_750_250_meta.tsv", header=TRUE, row.names=1)
 
 
 # Extract DESeq2 results
@@ -52,10 +52,10 @@ common_down <- intersect(detected_down_DESeq2, meta_down)
 
 # Step 13: Summarize outliers
 outliers_up <- setdiff(detected_up_DESeq2, meta_up)
-write.csv(outliers_up, "9_750_250_outliers_upregulated_DESeq2.csv", row.names = FALSE)
+write.csv(outliers_up, "Working Directory/Output/deseq2_9_750_250_outliers_upregulated.csv", row.names = FALSE)
 
 outliers_down <- setdiff(detected_down_DESeq2, meta_down)
-write.csv(outliers_down, "9_750_250_outliers_downregulated_DESeq2.csv", row.names = FALSE)
+write.csv(outliers_down, "Working Directory/Output/deseq2_9_750_250_outliers_downregulated.csv", row.names = FALSE)
 
 # Step 14: Accuracy and Precision Matrix
 true_positives <- length(common_up) + length(common_down)
@@ -67,27 +67,15 @@ precision <- true_positives / (true_positives + false_positives)
 recall <- true_positives / (true_positives + false_negatives)
 f1_score <- 2 * ((precision * recall) / (precision + recall))
 
-# Step 12: Venn Diagram Creation
-library(VennDiagram)
-
-# Venn diagram for upregulated genes
-venn.diagram(
-  x = list(DESeq2 = detected_up_DESeq2, meta = meta_up),
-  category.names = c("DESeq2 detected up", "Metadata up"),
-  output = TRUE,
-  filename = "DESEQ2_9_750_250_venn_upregulated.png",
-  output.type = "png",
-  imagetype = "png",
-  resolution = 300
+# Step 15: Output Metrics to CSV for further analysis outside R
+metrics_df <- data.frame(
+  True_Positives = true_positives,
+  False_Positives = false_positives,
+  True_Negatives = true_negatives,
+  False_Negatives = false_negatives,
+  Accuracy = accuracy,
+  Precision = precision,
+  Recall = recall,
+  F1_Score = f1_score
 )
-
-# Venn diagram for downregulated genes
-venn.diagram(
-  x = list(DESeq2 = detected_down_DESeq2, meta = meta_down),
-  category.names = c("DESeq2 detected down", "Metadata down"),
-  output = TRUE,
-  filename = "DESEQ2_9_750_250_venn_downregulated.png",
-  output.type = "png",
-  imagetype = "png",
-  resolution = 300
-)
+write.csv(metrics_df, "Working Directory/Output/Metrics_deseq2_9_750_250.csv", row.names = FALSE)

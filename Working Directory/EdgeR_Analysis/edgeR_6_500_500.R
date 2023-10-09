@@ -64,3 +64,15 @@ precision <- true_positives / (true_positives + false_positives)
 recall <- true_positives / (true_positives + false_negatives)
 f1_score <- 2 * ((precision * recall) / (precision + recall))
 
+# Step 15: Output Metrics to CSV for further analysis outside R
+metrics_df <- data.frame(
+  True_Positives = true_positives,
+  False_Positives = false_positives,
+  True_Negatives = true_negatives,
+  False_Negatives = false_negatives,
+  Accuracy = accuracy,
+  Precision = precision,
+  Recall = recall,
+  F1_Score = f1_score
+)
+write.csv(metrics_df, "Working Directory/Output/Metrics_edgeR_6_500_500.csv", row.names = FALSE)
