@@ -3,7 +3,7 @@ library(DESeq2)
 
 # Step 2: Load Dataset
 count_data <- read.table("RAW data/3_750_250.tsv", header=TRUE, row.names=1)
-sample_info <- data.frame(groups = factor(rep(1:2, each=3))) # Create a sample information data frame
+sample_info <- data.frame(groups = factor(rep(1:2, each=3)))
 
 # Step 3: Create DESeqDataSet object
 dds <- DESeqDataSetFromMatrix(countData = count_data,
@@ -11,7 +11,12 @@ dds <- DESeqDataSetFromMatrix(countData = count_data,
                               design = ~ groups)
 
 # Step 4: Filter low count genes (optional)
-#dds <- dds[ rowSums(counts(dds)) > 10, ]
+dds <- dds[ rowSums(counts(dds)) >= 10, ]
+
+#normalization 
+dds <- estimateSizeFactors(dds)
+sizeFactors(dds)
+normalized_counts <- counts(dds, normalized=TRUE)
 
 # Step 5: Perform differential expression analysis
 dds <- DESeq(dds)

@@ -11,7 +11,12 @@ dds <- DESeqDataSetFromMatrix(countData = count_data,
                               design = ~ groups)
 
 # Step 4: Filter low count genes (optional)
-#dds <- dds[ rowSums(counts(dds)) > 10, ]
+dds <- dds[ rowSums(counts(dds)) >= 10, ]
+
+#normalization 
+dds <- estimateSizeFactors(dds)
+sizeFactors(dds)
+normalized_counts <- counts(dds, normalized=TRUE)
 
 # Step 5: Perform differential expression analysis
 dds <- DESeq(dds)
