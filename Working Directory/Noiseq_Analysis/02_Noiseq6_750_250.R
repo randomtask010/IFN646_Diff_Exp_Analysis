@@ -13,6 +13,12 @@ colnames(count_data) <- sample_names
 sampleinfo <- data.frame(row.names=sample_names, condition=condition)
 sampleinfo
 
+#Filtering data
+#Excluding features with low counts improves differential expression results, since noise in the data is reduced
+#counts per million (CPM) method is used to filtering
+count_data = filtered.data(count_data, factor = sampleinfo$condition, norm=FALSE, depth=NULL, method=1, cv.cutoff=100, cpm=1, p.adj="fdr")
+count_data
+
 # Step 4: Create NOISeq object
 mydata <- readData(data=count_data, factors=sampleinfo)
 mydata
@@ -83,9 +89,9 @@ length(common_up)
 # Step 10: Summarize outliers
 outliers_up <- setdiff(detected_up_NOISeq, meta_up)
 outliers_up
-write.csv(outliers_up, "NOISeq2_6_750_250_outliers_upregulated.csv", row.names = FALSE)
+write.csv(outliers_up, "NOISeq_6_750_250_outliers_upregulated.csv", row.names = FALSE)
 outliers_down <- setdiff(detected_down_NOISeq, meta_down)
-write.csv(outliers_down, "NOISeq2_6_750_250_outliers_downregulated.csv", row.names = FALSE)
+write.csv(outliers_down, "NOISeq_6_750_250_outliers_downregulated.csv", row.names = FALSE)
 
 # Step 11: Accuracy and Precision Matrix
 true_positives <- length(common_up) + length(common_down)
@@ -96,8 +102,6 @@ accuracy <- (true_positives + true_negatives) / nrow(meta_data)
 precision <- true_positives / (true_positives + false_positives)
 recall <- true_positives / (true_positives + false_negatives)
 f1_score <- 2 * ((precision * recall) / (precision + recall))
-
-FDR <- false_positives/nrow(DEgenes)
 
 nrow(DEgenes) #total differentilly expressed genes identified by noiseq
 nrow(detected_down) #total down regulated differentilly expressed genes identified by noiseq
@@ -110,7 +114,6 @@ accuracy
 precision
 recall
 f1_score
-FDR
 
 # Step 12: Venn Diagram Creation
 library(VennDiagram)
@@ -120,7 +123,7 @@ venn.diagram(
   x = list(NOISeq = detected_up_NOISeq, meta = meta_up),
   category.names = c("NOISeq detected up", "Metadata up"),
   output = TRUE,
-  filename = "NOISeq2_6_750_250_venn_upregulated.png",
+  filename = "NOISeq_6_750_250_venn_upregulated.png",
   output.type = "png",
   imagetype = "png",
   resolution = 300
@@ -132,7 +135,7 @@ if(length(detected_down_NOISeq) > 0 & length(meta_down) > 0) {
     x = list(NOISeq = detected_down_NOISeq, meta = meta_down),
     category.names = c("NOISeq detected down", "Metadata down"),
     output = TRUE,
-    filename = "NOISeq2_6_750_250_venn_downregulated.png",
+    filename = "NOISeq_6_750_250_venn_downregulated.png",
     output.type = "png",
     imagetype = "png",
     resolution = 300

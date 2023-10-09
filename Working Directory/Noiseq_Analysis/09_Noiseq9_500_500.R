@@ -2,7 +2,7 @@
 library(NOISeq)
 
 # Step 2: Load Dataset
-count_data <- read.table("9_1000_0.tsv", header=TRUE, row.names=1)
+count_data <- read.table("9_500_500.tsv", header=TRUE, row.names=1)
 
 # Step 3: Create a conditions factor and a matrix of data
 condition <- rep(c("condition1", "condition2"), each = 9)
@@ -32,7 +32,7 @@ DEgenes <- degenes(results, q = 0.8, M = NULL)
 DEgenes
 
 # Step 7: Load Metadata
-meta_data <- read.table("9_1000_0_meta.tsv", header=TRUE, row.names=1)
+meta_data <- read.table("9_500_500_meta.tsv", header=TRUE, row.names=1)
 meta_data
 
 # Step 8: Merge with Meta Data
@@ -89,9 +89,9 @@ length(common_up)
 # Step 10: Summarize outliers
 outliers_up <- setdiff(detected_up_NOISeq, meta_up)
 outliers_up
-write.csv(outliers_up, "NOISeq_9_1000_0_outliers_upregulated.csv", row.names = FALSE)
+write.csv(outliers_up, "NOISeq_9_500_500_outliers_upregulated.csv", row.names = FALSE)
 outliers_down <- setdiff(detected_down_NOISeq, meta_down)
-write.csv(outliers_down, "NOISeq_9_1000_0_outliers_downregulated.csv", row.names = FALSE)
+write.csv(outliers_down, "NOISeq_9_500_500_outliers_downregulated.csv", row.names = FALSE)
 
 # Step 11: Accuracy and Precision Matrix
 true_positives <- length(common_up) + length(common_down)
@@ -123,7 +123,7 @@ venn.diagram(
   x = list(NOISeq = detected_up_NOISeq, meta = meta_up),
   category.names = c("NOISeq detected up", "Metadata up"),
   output = TRUE,
-  filename = "NOISeq_9_1000_0_venn_upregulated.png",
+  filename = "NOISeq_9_500_500_venn_upregulated.png",
   output.type = "png",
   imagetype = "png",
   resolution = 300
@@ -135,7 +135,7 @@ if(length(detected_down_NOISeq) > 0 & length(meta_down) > 0) {
     x = list(NOISeq = detected_down_NOISeq, meta = meta_down),
     category.names = c("NOISeq detected down", "Metadata down"),
     output = TRUE,
-    filename = "NOISeq_9_1000_0_venn_downregulated.png",
+    filename = "NOISeq_9_500_500_venn_downregulated.png",
     output.type = "png",
     imagetype = "png",
     resolution = 300
