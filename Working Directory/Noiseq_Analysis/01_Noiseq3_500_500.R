@@ -2,7 +2,7 @@
 library(NOISeq)
 
 # Step 2: Load Dataset
-count_data <- read.table("synthetic_data/3_500_500.tsv", header=TRUE, row.names=1)
+count_data <- read.table("3_500_500.tsv", header=TRUE, row.names=1)
 
 # Step 3: Create a conditions factor and a matrix of data
 condition <- rep(c("condition1", "condition2"), each = 3)
@@ -25,7 +25,7 @@ DEgenes <- degenes(results, q = 0.8, M = NULL)
 DEgenes
 
 # Step 7: Load Metadata
-meta_data <- read.table("synthetic_data/3_500_500_meta.tsv", header=TRUE, row.names=1)
+meta_data <- read.table("3_500_500_meta.tsv", header=TRUE, row.names=1)
 meta_data
 
 # Step 8: Merge with Meta Data
