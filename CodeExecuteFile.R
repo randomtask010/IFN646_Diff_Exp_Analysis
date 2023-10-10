@@ -54,11 +54,24 @@
   # down regulated stitch together for 3_500_500 down regulated outlier genes
   source("Working Directory/Data_Analysis/POC_3_500_500_DownRegulated.R")
   
-
+  #NoiSeq Data Merge
+  source("Working Directory/Data_Analysis/Threshold_Analysis_Noiseq_3_1000_0.R")
+  source("Working Directory/Data_Analysis/Threshold_Analysis_Noiseq_6_1000_0.R")
+  source("Working Directory/Data_Analysis/Threshold_Analysis_Noiseq_9_1000_0.R")
   
 
 #Analysis outputs and pretty pictures
   
   #pretty bar graph of metrics dataframe
   source("Working Directory/Data_Analysis/Accuracy_Metrics_Bar_Plot.R")
+  source("Working Directory/Data_Analysis/SampleSize_Impact_Analysis.R")
+  source("Working Directory/Data_Analysis/GeneCount_Analysis_Samplesize3.R")
+  source("Working Directory/Data_Analysis/GeneCount_Analysis_Samplesize6.R")
+  source("Working Directory/Data_Analysis/GeneCount_Analysis_Samplesize9.R")
+  source("Working Directory/Data_Analysis/Threshold_Analysis_Noiseq.R")
+  
+  
+  
+  
+  
   
