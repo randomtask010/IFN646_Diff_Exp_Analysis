@@ -59,6 +59,16 @@
   source("Working Directory/Data_Analysis/Threshold_Analysis_Noiseq_6_1000_0.R")
   source("Working Directory/Data_Analysis/Threshold_Analysis_Noiseq_9_1000_0.R")
   
+  #DeSeq Data Merge
+  source("Working Directory/Data_Analysis/Threshold_Analysis_Deseq_3_1000_0.R")
+  source("Working Directory/Data_Analysis/Threshold_Analysis_Deseq_6_1000_0.R")
+  source("Working Directory/Data_Analysis/Thershold_Analysis_Deseq_9_1000_0.R")
+  
+  #Edger Data Merge
+  source("Working Directory/Data_Analysis/Threshold_Analysis_Edger_3_1000_0.R")
+  source("Working Directory/Data_Analysis/Threshold_Analysis_Edger_6_1000_0.R")
+  source("Working Directory/Data_Analysis/Threshold_Analysis_Edger_9_1000_0.R")
+  
 
 #Analysis outputs and pretty pictures
   
@@ -69,6 +79,8 @@
   source("Working Directory/Data_Analysis/GeneCount_Analysis_Samplesize6.R")
   source("Working Directory/Data_Analysis/GeneCount_Analysis_Samplesize9.R")
   source("Working Directory/Data_Analysis/Threshold_Analysis_Noiseq.R")
+  source("Working Directory/Data_Analysis/Threshold_Analysis_Deseq.R")
+  source("Working Directory/Data_Analysis/Threshold_Analysis_Edger.R")
   
   
   

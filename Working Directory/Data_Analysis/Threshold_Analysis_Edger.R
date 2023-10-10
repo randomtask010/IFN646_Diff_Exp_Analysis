@@ -2,9 +2,9 @@ library(ggplot2)
 
 # List of file paths
 file_paths <- c(
-  "Working Directory/Output/Threshold_noiseq_3_1000_0.csv",
-  "Working Directory/Output/Threshold_noiseq_6_1000_0.csv",
-  "Working Directory/Output/Threshold_noiseq_9_1000_0.csv"
+  "Working Directory/Output/Threshold_Edger_3_1000_0.csv",
+  "Working Directory/Output/Threshold_Edger_6_1000_0.csv",
+  "Working Directory/Output/Threshold_Edger_9_1000_0.csv"
 )
 
 # Initialize an empty dataframe to store the merged data
@@ -25,7 +25,7 @@ merged_data
 p <- ggplot(merged_data, aes(x = Threshold, y = FDR, group = Experiment, color = Experiment)) +
   geom_line() +
   geom_point() +
-  labs(title = "q-value threshold against FDR with NOISeq tool", x = "q-value threshold", y = "FDR") +
+  labs(title = "p-value threshold against FDR with Edger tool", x = "p-value threshold", y = "FDR") +
   theme_bw() 
 #theme(legend.position = "top")  # Place the legend at the top
 
@@ -34,14 +34,14 @@ p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Print the plot
 print(p)
-ggsave(filename = "Working Directory/Output/Images/Threshold_FDR_Noiseq_Plot_3_6_9_1000_0.png", plot = p, width = 6, height = 6)
+ggsave(filename = "Working Directory/Output/Images/Threshold_FDR_Edger_Plot_3_6_9_1000_0.png", plot = p, width = 6, height = 6)
 
 
 
 p_rec <- ggplot(merged_data, aes(x = Threshold, y = Recall, group = Experiment, color = Experiment)) +
   geom_line() +
   geom_point() +
-  labs(title = "q-value threshold against Recall with NOISeq tool", x = "q-value threshold", y = "Recall") +
+  labs(title = "p-value threshold against Recall with Edger tool", x = "p-value threshold", y = "Recall") +
   theme_bw() 
 #theme(legend.position = "top")  # Place the legend at the top
 
@@ -50,13 +50,13 @@ p_rec <- p_rec + theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Print the plot
 print(p_rec)
-ggsave(filename = "Working Directory/Output/Images/Threshold_Recall_Noiseq_Plot_3_6_9_1000_0.png", plot = p_rec, width = 6, height = 6)
+ggsave(filename = "Working Directory/Output/Images/Threshold_Recall_Edger_Plot_3_6_9_1000_0.png", plot = p_rec, width = 6, height = 6)
 
 
 p_acc <- ggplot(merged_data, aes(x = Threshold, y = Accuracy, group = Experiment, color = Experiment)) +
   geom_line() +
   geom_point() +
-  labs(title = "q-value threshold against Accuracy with NOISeq tool", x = "q-value threshold", y = "Accuracy") +
+  labs(title = "p-value threshold against Accuracy with Edger tool", x = "p-value threshold", y = "Accuracy") +
   theme_bw() 
 #theme(legend.position = "top")  # Place the legend at the top
 
@@ -65,4 +65,4 @@ p_acc <- p_acc + theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Print the plot
 print(p_acc)
-ggsave(filename = "Working Directory/Output/Images/Threshold_Accuracy_Noiseq_Plot_3_6_9_1000_0.png", plot = p_acc, width = 6, height = 6)
+ggsave(filename = "Working Directory/Output/Images/Threshold_Accuracy_Edger_Plot_3_6_9_1000_0.png", plot = p_acc, width = 6, height = 6)
