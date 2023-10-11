@@ -9,8 +9,7 @@ p_acc <- ggplot(filtered_df, aes(x = Experiment, y = Accuracy, group = Tool, col
   geom_line() +
   geom_point() +
   labs(title = "Sample Size Impact on Accuracy Across Tools", x = "Sample Size", y = "Accuracy") +
-  theme_bw() +
-  theme(legend.position = "top")  # Place the legend at the top
+  theme_bw() # Place the legend at the top
 
 # Rotate x-axis labels
 p_acc <- p_acc + theme(axis.text.x = element_text(angle = 45, hjust = 1))
