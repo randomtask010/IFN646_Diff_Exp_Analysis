@@ -30,7 +30,7 @@
   #Variables
   Tool <- "noiseq"
   SourceFileVariable <- c("3_500_500", "3_750_250", "3_1000_0", "6_500_500", "6_750_250", "6_1000_0", "9_500_500", "9_750_250", "9_1000_0")
-  QValue <- 0.08
+  QValue <- 0.8
   # loop
   for (sample in SourceFileVariable){
     run_loop_noiseq(Tool, sample, QValue)
