@@ -10,7 +10,7 @@
   PValue <- 0.05
   # loop
   for (sample in SourceFileVariable){
-    run_loop_edgeR(Tool, sample, PValue)
+    run_loop_deseq2(Tool, sample, PValue)
   }
   
   
@@ -33,7 +33,7 @@
   QValue <- 0.08
   # loop
   for (sample in SourceFileVariable){
-    run_loop_edgeR(Tool, sample, PValue)
+    run_loop_noiseq(Tool, sample, QValue)
   }
   
 

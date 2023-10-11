@@ -1,4 +1,4 @@
-run_loop_edgeR <-function(Tool, SourceFileVariable, QValue) {
+run_loop_noiseq <-function(Tool, SourceFileVariable, QValue) {
 
 # Step 1: Call Library (NOISeq)
 library(NOISeq)
@@ -51,7 +51,7 @@ annotated_results$Row.names <- NULL
 #it is the same thing as saying it is downregulated in condition 2 compared to condition 1.
 #detected_down represent the down regulated genes in condition 2 compared to condition 1.
 # Downregulated in condition 2 compared to condition 1
-detected_down = degenes(results, q = 0.8, M = "up")
+detected_down = degenes(results, q = QValue, M = "up")
 detected_down
 
 annotated_results_down <- merge(as.data.frame(detected_down), meta_data, by="row.names", all.x=TRUE)
@@ -74,7 +74,7 @@ length(common_down)
 
 # upregulated in condition 2 compared to condition 1
 #detected_up represent the up regulated genes in condition 2 compared to condition 1.
-detected_up = degenes(results, q = 0.8, M = "down")
+detected_up = degenes(results, q = QValue, M = "down")
 detected_up
 
 annotated_results_up <- merge(as.data.frame(detected_up), meta_data, by="row.names", all.x=TRUE)

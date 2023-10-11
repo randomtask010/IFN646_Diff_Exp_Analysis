@@ -6,7 +6,8 @@ library(DESeq2)
 
 # Step 2: Load Dataset
 count_data <- read.table(paste0("RAW data/", SourceFileVariable, ".tsv"), header=TRUE, row.names=1)
-sample_info <- data.frame(groups = factor(rep(1:2, each=3))) 
+samplesize <- ncol(count_data) /2
+sample_info <- data.frame(groups = factor(rep(1:2, each=samplesize)))
 
 # Step 3: Create DESeqDataSet object
 dds <- DESeqDataSetFromMatrix(countData = count_data,
@@ -48,12 +49,12 @@ annotated_results$Row.names <- NULL
 
 # Step 12: Comparison using LogFC
 # Upregulated
-detected_up_DESeq2 <- rownames(annotated_results[annotated_results$log2FoldChange > 1 & annotated_results$padj < 0.05,])
+detected_up_DESeq2 <- rownames(annotated_results[annotated_results$log2FoldChange > 1 & annotated_results$padj < PValue,])
 meta_up <- rownames(annotated_results[annotated_results$upregulation == 1,])
 common_up <- intersect(detected_up_DESeq2, meta_up)
 
 # Downregulated
-detected_down_DESeq2 <- rownames(annotated_results[annotated_results$log2FoldChange < -1 & annotated_results$padj < 0.05,])
+detected_down_DESeq2 <- rownames(annotated_results[annotated_results$log2FoldChange < -1 & annotated_results$padj < PValue,])
 meta_down <- rownames(annotated_results[annotated_results$downregulation == 1,])
 common_down <- intersect(detected_down_DESeq2, meta_down)
 

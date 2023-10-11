@@ -44,11 +44,11 @@ annotated_results$Row.names <- NULL
 
 # Step 12: Comparison using LogFC
 # Upregulated
-detected_up_edgeR <- rownames(annotated_results[annotated_results$logFC > 0 & annotated_results$FDR < 0.05,])
+detected_up_edgeR <- rownames(annotated_results[annotated_results$logFC > 0 & annotated_results$FDR < PValue,])
 meta_up <- rownames(annotated_results[annotated_results$upregulation == 1,])
 common_up <- intersect(detected_up_edgeR, meta_up)
 # Downregulated
-detected_down_edgeR <- rownames(annotated_results[annotated_results$logFC < 0 & annotated_results$FDR < 0.05,])
+detected_down_edgeR <- rownames(annotated_results[annotated_results$logFC < 0 & annotated_results$FDR < PValue,])
 meta_down <- rownames(annotated_results[annotated_results$downregulation == 1,])
 common_down <- intersect(detected_down_edgeR, meta_down)
 
