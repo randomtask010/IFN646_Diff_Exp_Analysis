@@ -1,4 +1,3 @@
-
 # paramertised
 dir_path <- "Working Directory/Output/"
 tools <- c("deseq2", "edgeR", "noiseq")
@@ -9,18 +8,21 @@ data <- data.frame()
 # Loop for parameters
 for (tool in tools) {
   for (sample in samples) {
-    file_name <- paste0(dir_path, "Metrics_", tool, "_", sample, ".csv")
+    # Check if the tool is 'noiseq' and adjust the filename accordingly
+    if (tool == "noiseq") {
+      file_name <- paste0(dir_path, "Metrics_", tool, "_", sample, "_", "QValue", "_0.05.csv")
+    } else {
+      file_name <- paste0(dir_path, "Metrics_", tool, "_", sample, "_", "PValue", "_0.05.csv")
+    }
+    
     # Read the CSV
     df <- read.csv(file_name, stringsAsFactors = FALSE)
     df$Tool <- tool
     df$Experiment <- sample
-    # Stack the data verticlaly
+    # Stack the data vertically
     data <- rbind(data, df)
   }
 }
 
-#Rename for useage and analysis
+#Rename for usage and analysis
 Metrics_Final_Combined_DF <- data
-
-
-
