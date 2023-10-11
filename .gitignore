@@ -3,3 +3,6 @@
 *.png
 *.log
 .Rhistory
+*.csv
+*.csv
+*.json
