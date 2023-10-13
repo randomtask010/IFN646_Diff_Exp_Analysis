@@ -4,6 +4,9 @@ run_loop_deseq_threshold <-function(SourceFileVariable, PValue) {
   # Step 1: Call Library (DESeq2)
   library(DESeq2)
   
+  TestRun <- paste0("Test : ",SourceFileVariable,"_PValue",PValue)
+  print(TestRun)
+  
   # Step 2: Load Dataset
   count_data <- read.table(paste0("RAW data/", SourceFileVariable, ".tsv"), header=TRUE, row.names=1)
   samplesize <- ncol(count_data) /2
@@ -57,6 +60,13 @@ run_loop_deseq_threshold <-function(SourceFileVariable, PValue) {
   detected_down_DESeq2 <- rownames(annotated_results[annotated_results$log2FoldChange < -1 & annotated_results$padj < PValue,])
   meta_down <- rownames(annotated_results[annotated_results$downregulation == 1,])
   common_down <- intersect(detected_down_DESeq2, meta_down)
+  
+  # Step 13: Summarize outliers
+  outliers_up <- setdiff(detected_up_DESeq2, meta_up)
+  write.csv(outliers_up, paste0("Working Directory/Output/",Tool,"_" , SourceFileVariable,"_outliers_upregulated_",  "PValue_",PValue,".csv"), row.names = FALSE)
+  
+  outliers_down <- setdiff(detected_down_DESeq2, meta_down)
+  write.csv(outliers_down, paste0("Working Directory/Output/", Tool,"_", SourceFileVariable, "_outliers_downregulated_", "PValue_", PValue,".csv"), row.names = FALSE)
   
   # Step 14: Accuracy and Precision Matrix
   true_positives <- length(common_up) + length(common_down)

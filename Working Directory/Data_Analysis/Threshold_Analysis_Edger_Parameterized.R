@@ -4,6 +4,9 @@ run_loop_edgeR_threshold <-function(SourceFileVariable, PValue) {
   # Step 1: Call Library (edgeR)
   library(edgeR)
   
+  TestRun <- paste0("Test : ",SourceFileVariable,"_PValue",PValue)
+  print(TestRun)
+  
   # Step 2: Load Dataset
   count_data <- read.table(paste0("RAW data/", SourceFileVariable, ".tsv"), header=TRUE, row.names=1)
   samplesize <- ncol(count_data) /2

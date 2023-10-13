@@ -94,9 +94,9 @@ length(common_up)
 # Step 10: Summarize outliers
 outliers_up <- setdiff(detected_up_NOISeq, meta_up)
 outliers_up
-write.csv(outliers_up,paste0("Working Directory/Output/",Tool,"_" , SourceFileVariable,"_outliers_upregulated_",  "PValue_",PValue,".csv"), row.names = FALSE)
+write.csv(outliers_up,paste0("Working Directory/Output/",Tool,"_" , SourceFileVariable,"_outliers_upregulated_",  "PValue_",QValue,".csv"), row.names = FALSE)
 outliers_down <- setdiff(detected_down_NOISeq, meta_down)
-write.csv(outliers_down, paste0("Working Directory/Output/", Tool,"_", SourceFileVariable, "_outliers_downregulated_", "PValue_", PValue,".csv"), row.names = FALSE)
+write.csv(outliers_down, paste0("Working Directory/Output/", Tool,"_", SourceFileVariable, "_outliers_downregulated_", "PValue_", QValue,".csv"), row.names = FALSE)
 
 # Step 11: Accuracy and Precision Matrix
 true_positives <- length(common_up) + length(common_down)

@@ -1,7 +1,10 @@
-run_loop_noiseq_threshold <-function(SourceFileVariable, q_value) {
+run_loop_noiseq_threshold <-function(SourceFileVariable, QValue) {
   
   # Step 1: Call Library (NOISeq)
   library(NOISeq)
+  
+  TestRun <- paste0("Test : ",SourceFileVariable,"_QValue",PValue)
+  print(TestRun)
   
   # Step 2: Load Dataset
   count_data <- read.table(paste0("RAW data/", SourceFileVariable, ".tsv"), header=TRUE, row.names=1)
@@ -30,7 +33,7 @@ run_loop_noiseq_threshold <-function(SourceFileVariable, q_value) {
   # Step 5: Differential expression analysis with NOISeq
   results <- noiseq(mydata, k = 0.5, norm = "tmm", replicates = "technical", factor = "condition")
   
-  DEgenes <- degenes(results, q = q_value, M = NULL)  
+  DEgenes <- degenes(results, q = QValue, M = NULL)  
   meta_data <- read.table(paste0("RAW data/", SourceFileVariable,"_meta.tsv"), header=TRUE, row.names=1)
   
   annotated_results <- merge(as.data.frame(DEgenes), meta_data, by="row.names", all.x=TRUE)
@@ -39,7 +42,7 @@ run_loop_noiseq_threshold <-function(SourceFileVariable, q_value) {
   annotated_results$Row.names <- NULL
   
   # Downregulated in condition 2 compared to condition 1
-  detected_down = degenes(results, q = q_value, M = "up")
+  detected_down = degenes(results, q = QValue, M = "up")
   detected_down
   
   annotated_results_down <- merge(as.data.frame(detected_down), meta_data, by="row.names", all.x=TRUE)
@@ -55,7 +58,7 @@ run_loop_noiseq_threshold <-function(SourceFileVariable, q_value) {
   common_down <- intersect(detected_down_NOISeq, meta_down)
   
   #detected_up represent the up regulated genes in condition 2 compared to condition 1.
-  detected_up = degenes(results, q = q_value, M = "down")
+  detected_up = degenes(results, q = QValue, M = "down")
   
   annotated_results_up <- merge(as.data.frame(detected_up), meta_data, by="row.names", all.x=TRUE)
   rownames(annotated_results_up) <- annotated_results_up$Row.names
@@ -70,6 +73,10 @@ run_loop_noiseq_threshold <-function(SourceFileVariable, q_value) {
   
   # Step 10: Summarize outliers
   outliers_up <- setdiff(detected_up_NOISeq, meta_up)
+  write.csv(outliers_up,paste0("Working Directory/Output/",Tool,"_" , SourceFileVariable,"_outliers_upregulated_",  "PValue_", QValue,".csv"), row.names = FALSE)
+  outliers_down <- setdiff(detected_down_NOISeq, meta_down)
+  write.csv(outliers_down, paste0("Working Directory/Output/", Tool,"_", SourceFileVariable, "_outliers_downregulated_", "PValue_", QValue,".csv"), row.names = FALSE)
+  
   
   # Step 11: Accuracy and Precision Matrix
   true_positives <- length(common_up) + length(common_down)
@@ -84,7 +91,7 @@ run_loop_noiseq_threshold <-function(SourceFileVariable, q_value) {
   
   # Step 12: Output Metrics to CSV for further analysis outside R
   metrics_df_1 <- data.frame(
-    Threshold = q_value,
+    Threshold = QValue,
     True_Positives = true_positives,
     False_Positives = false_positives,
     True_Negatives = true_negatives,
