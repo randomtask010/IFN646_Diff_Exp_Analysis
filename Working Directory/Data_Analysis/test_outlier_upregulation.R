@@ -1,6 +1,8 @@
-run_loop_UpRegulation <-function(PValue, QValue) {
+run_loop_UpRegulation <- function(PValue, QValue) {
   
-  # Parameterized
+  library(VennDiagram)
+  
+  # Parameterised
   dir_path <- "Working Directory/Output/Threshold_Analysis/"
   tools <- c("deseq", "edgeR", "noiseq")
   samples <- c("3_500_500", "3_750_250", "3_1000_0", "6_500_500", "6_750_250", "6_1000_0", "9_500_500", "9_750_250", "9_1000_0")
@@ -29,14 +31,7 @@ run_loop_UpRegulation <-function(PValue, QValue) {
       c(values, rep(NA, max_rows - length(values)))
     })
     
-    if (any(tools == "noiseq")) {
-      value_used <- QValue
-      value_label <- "QValue"
-    } else {
-      value_used <- PValue
-      value_label <- "PValue"
-    }
-    filename = paste0(output_image_dir, "venn_", sample, "_", outlier_condition, "_", value_label, "_", value_used, ".png")
+    filename = paste0(output_image_dir, "venn_", sample, "_", outlier_condition, "_PValue_", PValue, "_QValue_", QValue, ".png")
     
     # Create the Venn diagram
     venn.diagram(
