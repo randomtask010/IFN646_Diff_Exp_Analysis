@@ -10,7 +10,7 @@ for (tool in tools) {
   for (sample in samples) {
     # Check if the tool is 'noiseq' and adjust the filename accordingly
     if (tool == "noiseq") {
-      file_name <- paste0(dir_path, "Metrics_", tool, "_", sample, "_", "QValue", "_0.05.csv")
+      file_name <- paste0(dir_path, "Metrics_", tool, "_", sample, "_", "QValue", "_0.8.csv")
     } else {
       file_name <- paste0(dir_path, "Metrics_", tool, "_", sample, "_", "PValue", "_0.05.csv")
     }

@@ -94,9 +94,9 @@ length(common_up)
 # Step 10: Summarize outliers
 outliers_up <- setdiff(detected_up_NOISeq, meta_up)
 outliers_up
-write.csv(outliers_up,paste0("Working Directory/Output/",Tool,"_" , SourceFileVariable,"_outliers_upregulated_",  "PValue_",PValue,".csv"), row.names = FALSE)
+write.csv(outliers_up,paste0("Working Directory/Output/",Tool,"_" , SourceFileVariable,"_outliers_upregulated_",  "QValue_",QValue,".csv"), row.names = FALSE)
 outliers_down <- setdiff(detected_down_NOISeq, meta_down)
-write.csv(outliers_down, paste0("Working Directory/Output/", Tool,"_", SourceFileVariable, "_outliers_downregulated_", "PValue_", PValue,".csv"), row.names = FALSE)
+write.csv(outliers_down, paste0("Working Directory/Output/", Tool,"_", SourceFileVariable, "_outliers_downregulated_", "QValue_", QValue,".csv"), row.names = FALSE)
 
 # Step 11: Accuracy and Precision Matrix
 true_positives <- length(common_up) + length(common_down)
@@ -121,7 +121,7 @@ metrics_df <- data.frame(
   F1_Score = f1_score,
   FDR = fdr
 )
-write.csv(metrics_df, paste0("Working Directory/Output/Metrics_", Tool, "_", SourceFileVariable, "_", "QValue_",PValue, ".csv"), row.names = FALSE)
+write.csv(metrics_df, paste0("Working Directory/Output/Metrics_", Tool, "_", SourceFileVariable, "_", "QValue_",QValue, ".csv"), row.names = FALSE)
 
 # BELOW TO BE Included in overall metric output if needed or deleted if used for debugging - NISH to action
 # could be useful when expanding metrics to include time for code to execute - analysis output as a proxy for efficency 

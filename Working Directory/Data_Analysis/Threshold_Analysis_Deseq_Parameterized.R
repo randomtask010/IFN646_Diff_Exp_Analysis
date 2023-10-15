@@ -58,6 +58,13 @@ run_loop_deseq_threshold <-function(SourceFileVariable, PValue) {
   meta_down <- rownames(annotated_results[annotated_results$downregulation == 1,])
   common_down <- intersect(detected_down_DESeq2, meta_down)
   
+  # Step 13: Summarize outliers
+  outliers_up <- setdiff(detected_up_DESeq2, meta_up)
+  write.csv(outliers_up, paste0("Working Directory/Output/Threshold_Analysis/","deseq","_" , SourceFileVariable,"_outliers_upregulated_",  "PValue_",PValue,".csv"), row.names = FALSE)
+  
+  outliers_down <- setdiff(detected_down_DESeq2, meta_down)
+  write.csv(outliers_down, paste0("Working Directory/Output/Threshold_Analysis/","deseq","_", SourceFileVariable, "_outliers_downregulated_", "PValue_", PValue,".csv"), row.names = FALSE)
+  
   # Step 14: Accuracy and Precision Matrix
   true_positives <- length(common_up) + length(common_down)
   false_positives <- length(setdiff(detected_up_DESeq2, meta_up)) + length(setdiff(detected_down_DESeq2, meta_down))
@@ -84,19 +91,19 @@ run_loop_deseq_threshold <-function(SourceFileVariable, PValue) {
     Experiment = SourceFileVariable
   )
   
-  # Initialize an empty data frame to hold all the results
-  all_results <- data.frame()
-  
+
   # Read the existing results, if any
-  if (file.exists("Working Directory/Output/Threshold_deseq.csv")) {
-    all_results <- read.csv("Working Directory/Output/Threshold_deseq.csv", header = TRUE)
+  if (!file.exists("Working Directory/Output/Threshold_Analysis/Threshold_deseq.csv")) {
+    all_results <- data.frame()
+  } else {
+    all_results <- read.csv("Working Directory/Output/Threshold_Analysis/Threshold_deseq.csv", header = TRUE)
   }
   
   # Append the current results to the all_results data frame
   all_results <- rbind(all_results, metrics_df)
   
   # Write the combined data frame to the CSV file
-  write.csv(all_results, "Working Directory/Output/Threshold_deseq.csv", row.names = FALSE)
+  write.csv(all_results, "Working Directory/Output/Threshold_Analysis/Threshold_deseq.csv", row.names = FALSE)
   
   
 }

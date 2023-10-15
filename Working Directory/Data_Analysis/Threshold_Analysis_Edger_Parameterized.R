@@ -1,5 +1,4 @@
-run_loop_edgeR_threshold <-function(SourceFileVariable, PValue) {
-  
+run_loop_edgeR_threshold <- function(SourceFileVariable, PValue) {
   
   # Step 1: Call Library (edgeR)
   library(edgeR)
@@ -47,6 +46,7 @@ run_loop_edgeR_threshold <-function(SourceFileVariable, PValue) {
   detected_up_edgeR <- rownames(annotated_results[annotated_results$logFC > 0 & annotated_results$FDR < PValue,])
   meta_up <- rownames(annotated_results[annotated_results$upregulation == 1,])
   common_up <- intersect(detected_up_edgeR, meta_up)
+  
   # Downregulated
   detected_down_edgeR <- rownames(annotated_results[annotated_results$logFC < 0 & annotated_results$FDR < PValue,])
   meta_down <- rownames(annotated_results[annotated_results$downregulation == 1,])
@@ -54,9 +54,9 @@ run_loop_edgeR_threshold <-function(SourceFileVariable, PValue) {
   
   # Step 13: Summarize outliers
   outliers_up <- setdiff(detected_up_edgeR, meta_up)
-  write.csv(outliers_up, paste0("Working Directory/Output/",Tool,"_" , SourceFileVariable,"_outliers_upregulated_",  "PValue_",PValue,".csv"), row.names = FALSE)
+  write.csv(outliers_up, paste0("Working Directory/Output/Threshold_Analysis/","edgeR","_" , SourceFileVariable,"_outliers_upregulated_",  "PValue_",PValue,".csv"), row.names = FALSE)
   outliers_down <- setdiff(detected_down_edgeR, meta_down)
-  write.csv(outliers_down, paste0("Working Directory/Output/", Tool,"_", SourceFileVariable, "_outliers_downregulated_", "PValue_", PValue,".csv"), row.names = FALSE)
+  write.csv(outliers_down, paste0("Working Directory/Output/Threshold_Analysis/", "edgeR","_", SourceFileVariable, "_outliers_downregulated_", "PValue_", PValue,".csv"), row.names = FALSE)
   
   # Step 14: Accuracy and Precision Matrix
   true_positives <- length(common_up) + length(common_down)
@@ -83,20 +83,18 @@ run_loop_edgeR_threshold <-function(SourceFileVariable, PValue) {
     FDR = fdr,
     Experiment = SourceFileVariable
   )
-
-  # Initialize an empty data frame to hold all the results
-  all_results <- data.frame()
   
   # Read the existing results, if any
-  if (file.exists("Working Directory/Output/Threshold_edger.csv")) {
-    all_results <- read.csv("Working Directory/Output/Threshold_edger.csv", header = TRUE)
+  if (!file.exists("Working Directory/Output/Threshold_Analysis/Threshold_edger.csv")) {
+    all_results <- data.frame()
+  } else {
+    all_results <- read.csv("Working Directory/Output/Threshold_Analysis/Threshold_edger.csv", header = TRUE)
   }
+ 
   
   # Append the current results to the all_results data frame
   all_results <- rbind(all_results, metrics_df)
   
   # Write the combined data frame to the CSV file
-  write.csv(all_results, "Working Directory/Output/Threshold_edger.csv", row.names = FALSE)
-  
-  
+  write.csv(all_results, "Working Directory/Output/Threshold_Analysis/Threshold_edger.csv", row.names = FALSE)
 }
