@@ -1,4 +1,8 @@
 # Main Run Script
+install.packages("writexl")
+BiocManager::install('DESeq2')
+BiocManager::install('edgeR')
+BiocManager::install('NOISeq')
 
 # Run Analysis
 
@@ -127,7 +131,7 @@
   # This creates the intersect by sample and thresholds
   source("Working Directory/Data_Analysis/Sensitivity_Intersect.R")
   #Inspect these source values
-  
+  source("Working Directory/Data_Analysis/summarystats_of_outliers.R")
   
   
   

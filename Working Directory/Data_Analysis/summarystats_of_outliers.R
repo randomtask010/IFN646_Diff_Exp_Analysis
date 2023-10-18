@@ -1,6 +1,7 @@
 ## Incorporate sample size into this!
 
-# Function to load the original count data matrix for a sample
+library(writexl)
+# load the original count data matrix for a sample
 load_count_data <- function(sample) {
   count_data <- read.table(paste0("RAW Data/", sample, ".tsv"), header=TRUE, row.names=1)
   return(count_data)
@@ -16,7 +17,7 @@ summary_stats <- list()
 for (sample in samples) {
   for (condition in conditions) {
     
-    # Load the genes from the generated CSV
+    # Load the genes from the CSV
     file_path <- paste0("Working Directory/Output/Common_DE_Genes_Thresholds_", condition, "_", sample, ".csv")
     if (!file.exists(file_path)) next
     genes_df <- read.csv(file_path, stringsAsFactors = FALSE)
@@ -44,10 +45,14 @@ for (sample in samples) {
       )
     })
     
-    # Store the statistics in the list
-    summary_stats[[paste0(sample, "_", condition)]] <- t(gene_stats)
+    # Store the statistics list
+    df <- as.data.frame(t(gene_stats))
+    df$gene_id <- rownames(df)
+    summary_stats[[paste0(sample, "_", condition)]] <- df
+    
   }
 }
 
 # View the summary statistics
 summary_stats
+write_xlsx(summary_stats, "Working Directory/Output/Summary_DE_Genes_by_Samples_Stats.xlsx")
