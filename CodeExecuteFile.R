@@ -105,7 +105,6 @@
   source("Working Directory/Data_Analysis/test_outlier_upregulation.R")
   PValue <- c(0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09)
   QValue <- c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9)
-  
   # loop
   for(i in 1:length(PValue)) {
     run_loop_UpRegulation(PValue[i], QValue[i])
@@ -116,16 +115,22 @@
   source("Working Directory/Data_Analysis/test_outlier_downregulation.R")
   PValue <- c(0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09)
   QValue <- c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9)
-  
   # loop
   for(i in 1:length(PValue)) {
     run_loop_DownRegulation(PValue[i], QValue[i])
   }
   
+## Intersect of Outliers at each threshold  
+  #These are just combined and dont show the specificicity accross each sample
+  source("Working Directory/Data_Analysis/Common_DE_Genes_Accross_Threholds_DownRegulated_Outliers.R")
+  source("Working Directory/Data_Analysis/Common_DE_Genes_Accross_Threholds_UpRegulated_Outliers.R")
+  # This creates the intersect by sample and thresholds
+  source("Working Directory/Data_Analysis/Sensitivity_Intersect.R")
+  #Inspect these source values
   
   
-
-
+  
+  
 #Analysis outputs and pretty pictures
   
   #pretty bar graph of metrics dataframe
@@ -137,8 +142,8 @@
   source("Working Directory/Data_Analysis/Threshold_Analysis_Noiseq.R")
   source("Working Directory/Data_Analysis/Threshold_Analysis_Deseq.R")
   source("Working Directory/Data_Analysis/Threshold_Analysis_Edger.R")
-  # Intersection Point for each tool based on FDR for each sensitivity
-  source("Working Directory/Data_Analysis/Sensitivity_Intersect.R")
+  
+ 
   
   
   
