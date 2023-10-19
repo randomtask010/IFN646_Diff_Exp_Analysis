@@ -1,7 +1,6 @@
-## Incorporate sample size into this!
-
 library(writexl)
-# load the original count data matrix for a sample
+
+# Load the original count data matrix for a sample
 load_count_data <- function(sample) {
   count_data <- read.table(paste0("RAW Data/", sample, ".tsv"), header=TRUE, row.names=1)
   return(count_data)
@@ -10,14 +9,14 @@ load_count_data <- function(sample) {
 samples <- c("3_500_500", "3_750_250", "3_1000_0", "6_500_500", "6_750_250", "6_1000_0", "9_500_500", "9_750_250", "9_1000_0")
 conditions <- c("outliers_upregulated", "outliers_downregulated")
 
-# List for  summary stats
+# List for summary stats
 summary_stats <- list()
 
 # Loop over each sample and condition
 for (sample in samples) {
   for (condition in conditions) {
     
-    # Load the genes from the CSV
+    # Load the genes from the CSVs
     file_path <- paste0("Working Directory/Output/Common_DE_Genes_Thresholds_", condition, "_", sample, ".csv")
     if (!file.exists(file_path)) next
     genes_df <- read.csv(file_path, stringsAsFactors = FALSE)
@@ -32,16 +31,29 @@ for (sample in samples) {
     # Extract rows corresponding to the genes
     extracted_data <- count_data[rownames(count_data) %in% genes_list, ]
     
-    # Calculate summary statistics for each gene
+    # Determine sample size
+    samplesize <- ncol(extracted_data) / 2
+    
+    # Calculate summary statistics for each gene divided by sample size
+    # This allows us to identify if the samples potentially were so skewed that normalisation didnt account for them leading to consistently DE genes
     gene_stats <- apply(extracted_data, 1, function(gene_counts) {
+      current_sample <- gene_counts[1:samplesize]
+      next_sample <- gene_counts[(samplesize+1):(2*samplesize)]
       c(
-        mean = mean(gene_counts, na.rm=TRUE),
-        median = median(gene_counts, na.rm=TRUE),
-        sd = sd(gene_counts, na.rm=TRUE),
-        min = min(gene_counts, na.rm=TRUE),
-        Q1 = quantile(gene_counts, 0.25, na.rm=TRUE),
-        Q3 = quantile(gene_counts, 0.75, na.rm=TRUE),
-        max = max(gene_counts, na.rm=TRUE)
+        mean_condition_1 = mean(current_sample, na.rm=TRUE),
+        median_condition_1 = median(current_sample, na.rm=TRUE),
+        sd_condition_1 = sd(current_sample, na.rm=TRUE),
+        min_condition_1 = min(current_sample, na.rm=TRUE),
+        Q1_condition_1 = quantile(current_sample, 0.25, na.rm=TRUE),
+        Q3_condition_1 = quantile(current_sample, 0.75, na.rm=TRUE),
+        max_condition_1 = max(current_sample, na.rm=TRUE),
+        mean_condition_2 = mean(next_sample, na.rm=TRUE),
+        median_condition_2 = median(next_sample, na.rm=TRUE),
+        sd_condition_2 = sd(next_sample, na.rm=TRUE),
+        min_condition_2 = min(next_sample, na.rm=TRUE),
+        Q1_condition_2 = quantile(next_sample, 0.25, na.rm=TRUE),
+        Q3_condition_2 = quantile(next_sample, 0.75, na.rm=TRUE),
+        max_condition_2 = max(next_sample, na.rm=TRUE)
       )
     })
     
