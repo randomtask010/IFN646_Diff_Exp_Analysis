@@ -2,7 +2,7 @@ library(ggplot2)
 
 # List of file paths
 
-threshold_deseq_data <- read.csv("Working Directory/Output/Threshold_deseq.csv", header = TRUE)
+threshold_deseq_data <- read.csv("Working Directory/Output/Threshold_Analysis/Threshold_deseq.csv", header = TRUE)
 
 #q-value threshold against FDR
 p_fdr <- ggplot(threshold_deseq_data, aes(x = Threshold, y = FDR, group = Experiment, color = Experiment)) +

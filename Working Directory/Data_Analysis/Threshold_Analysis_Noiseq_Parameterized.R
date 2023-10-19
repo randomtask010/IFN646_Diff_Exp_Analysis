@@ -70,6 +70,10 @@ run_loop_noiseq_threshold <-function(SourceFileVariable, q_value) {
   
   # Step 10: Summarize outliers
   outliers_up <- setdiff(detected_up_NOISeq, meta_up)
+  outliers_up <- setdiff(detected_up_NOISeq, meta_up)
+  write.csv(outliers_up,paste0("Working Directory/Output/Threshold_Analysis/","noiseq","_" , SourceFileVariable,"_outliers_upregulated_",  "QValue_", q_value,".csv"), row.names = FALSE)
+  outliers_down <- setdiff(detected_down_NOISeq, meta_down)
+  write.csv(outliers_down, paste0("Working Directory/Output/Threshold_Analysis/", "noiseq","_", SourceFileVariable, "_outliers_downregulated_", "QValue_", q_value,".csv"), row.names = FALSE)
   
   # Step 11: Accuracy and Precision Matrix
   true_positives <- length(common_up) + length(common_down)
@@ -97,18 +101,19 @@ run_loop_noiseq_threshold <-function(SourceFileVariable, q_value) {
     Experiment = SourceFileVariable
   )
 
-  # Initialize an empty data frame to hold all the results
-  all_results <- data.frame()
+
   
   # Read the existing results, if any
-  if (file.exists("Working Directory/Output/Threshold_noiseq.csv")) {
-    all_results <- read.csv("Working Directory/Output/Threshold_noiseq.csv", header = TRUE)
+  if (!file.exists("Working Directory/Output/Threshold_Analysis/Threshold_noiseq.csv")) {
+    all_results <- data.frame()
+  } else {
+    all_results <- read.csv("Working Directory/Output/Threshold_Analysis/Threshold_noiseq.csv", header = TRUE)
   }
   
   # Append the current results to the all_results data frame
   all_results <- rbind(all_results, metrics_df_1)
   
   # Write the combined data frame to the CSV file
-  write.csv(all_results, "Working Directory/Output/Threshold_noiseq.csv", row.names = FALSE)
+  write.csv(all_results, "Working Directory/Output/Threshold_Analysis/Threshold_noiseq.csv", row.names = FALSE)
 
 }

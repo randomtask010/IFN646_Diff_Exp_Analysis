@@ -2,7 +2,7 @@ library(ggplot2)
 
 # List of file paths
 
-threshold_edger_data <- read.csv("Working Directory/Output/Threshold_edger.csv", header = TRUE)
+threshold_edger_data <- read.csv("Working Directory/Output/Threshold_Analysis/Threshold_edger.csv", header = TRUE)
 
 #q-value threshold against FDR
 p_fdr <- ggplot(threshold_edger_data, aes(x = Threshold, y = FDR, group = Experiment, color = Experiment)) +
