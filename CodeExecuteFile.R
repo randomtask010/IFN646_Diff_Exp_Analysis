@@ -139,8 +139,9 @@ install.packages("writexl")
   source("Working Directory/Data_Analysis/Common_FP_Gene_Plots.R")
   source("Working Directory/Data_Analysis/LineGraphs_Common_DE_FPs.R")
   
-## DESeq2 Volcano Plot Outliers
-  source("Working Directory/Data_Analysis/VolcanoPlots_Deseq2.R")
+## Volcano Plot Outliers and truth
+  source("Working Directory/Data_Analysis/MA_Plots_TPs.R")
+  source("Working Directory/Data_Analysis/MA_Plots_FPs.R")
   
   
   
