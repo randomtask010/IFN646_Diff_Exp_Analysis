@@ -60,7 +60,9 @@ for (sample in samples) {
     # Store the statistics list
     df <- as.data.frame(t(gene_stats))
     df$gene_id <- rownames(df)
-    summary_stats[[paste0(sample, "_", condition)]] <- df
+    adjusted_condition <- ifelse(condition == "outliers_upregulated", "fp_upregulated", 
+                                 ifelse(condition == "outliers_downregulated", "fp_downregulated", condition))
+    summary_stats[[paste0(sample, "_", adjusted_condition)]] <- df  # Adjusted condition name for the list key
     
   }
 }

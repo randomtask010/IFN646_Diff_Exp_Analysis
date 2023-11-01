@@ -1,11 +1,12 @@
 # Load the required package
 library(ggplot2)
+library(readxl)
 
-# Replace 'your_file.xlsx' with the actual file path
+
 file_path <- "Working Directory/Output/Summary_DE_Genes_by_Samples_Stats.xlsx"
 
 # Get the sheet names
-sheet_names <- excel_sheets(file_path)  # For 'readxl' package
+sheet_names <- excel_sheets(file_path)  
 
 # Create a list to store the data frames
 data_list <- list()
@@ -26,7 +27,7 @@ for (sheet in sheet_names) {
     ) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
     scale_y_continuous(labels = scales::comma) +
-    coord_cartesian(ylim = c(-100, 100))  # Adjust the y-axis limits to zoom in on small differences
+    coord_cartesian(ylim = c(-100, 100))  
   
   # Print or save the plot for each sheet
   output_directory <- "Working Directory/Output/Images/"
@@ -55,7 +56,7 @@ for (sheet in sheet_names) {
     ) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
     scale_y_continuous(labels = scales::comma) +
-    coord_cartesian(ylim = c(-100, 100))  # Adjust the y-axis limits to zoom in on small differences
+    coord_cartesian(ylim = c(-100, 100))  
   
   output_directory <- "Working Directory/Output/Images/"
   output_file <- file.path(output_directory, paste("SdDiff_", sheet, ".png"))
@@ -64,3 +65,4 @@ for (sheet in sheet_names) {
   # Print the saved file path
   print(output_file)
 }
+
