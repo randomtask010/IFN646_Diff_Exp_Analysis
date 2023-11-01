@@ -1,8 +1,10 @@
 # Main Run Script
 install.packages("writexl")
-BiocManager::install('DESeq2')
-BiocManager::install('edgeR')
-BiocManager::install('NOISeq')
+
+# Un-comment these if first time running
+#BiocManager::install('DESeq2')
+#BiocManager::install('edgeR')
+#BiocManager::install('NOISeq')
 
 # Run Analysis
 
@@ -132,6 +134,14 @@ BiocManager::install('NOISeq')
   source("Working Directory/Data_Analysis/Sensitivity_Intersect.R")
   #Inspect these source values
   source("Working Directory/Data_Analysis/summarystats_of_outliers.R")
+  
+## Common False Positive Gene summary stat difference comparison(With Mean and SD) Plots
+  source("Working Directory/Data_Analysis/Common_FP_Gene_Plots.R")
+  source("Working Directory/Data_Analysis/LineGraphs_Common_DE_FPs.R")
+  
+## Volcano Plot Outliers and truth
+  source("Working Directory/Data_Analysis/MA_Plots_TPs.R")
+  source("Working Directory/Data_Analysis/MA_Plots_FPs.R")
   
   
   
